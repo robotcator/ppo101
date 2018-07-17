@@ -53,7 +53,7 @@ def main():
     #     from visdom import Visdom
     #     viz = Visdom(port=args.port)
     #     win = None
-
+    #
     # envs = [make_env(args.env_name, args.seed, i, args.log_dir, args.add_timestep)
     #             for i in range(args.num_processes)]
     #
@@ -67,6 +67,8 @@ def main():
 
     from atari_wrappers_baseline import wrap_deepmind
     envs = wrap_deepmind(gym.make('PongDeterministic-v4'), frame_stack=True)
+
+    envs = DummyVecEnv(envs)
 
     obs_shape = envs.observation_space.shape
     obs_shape = (obs_shape[0] * args.num_stack, *obs_shape[1:])
